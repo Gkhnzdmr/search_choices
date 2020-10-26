@@ -186,10 +186,10 @@ class _MyAppState extends State<MyApp> {
     Map<String, Widget> widgets;
     widgets = {
       "Single dialog": SearchChoices.single(
-        searchKeywordFunction: (val) {
-          search = val;
-        },
-        searchKeyword: search,
+        // searchKeywordFunction: (val) {
+        //   search = val;
+        // },
+        //searchKeyword: search,
         items: items,
         value: selectedValueSingleDialog,
         hint: "Select one",

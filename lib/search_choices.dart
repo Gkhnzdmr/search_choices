@@ -875,7 +875,9 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
   void _updateShownIndexes(String keyword) {
     if (keyword != null) {
       latestKeyword = keyword;
-      widget.searchKeywordFunction(keyword);
+      if (widget.searchKeywordFunction != null) {
+        widget.searchKeywordFunction(keyword);
+      }
     }
     if (latestKeyword != null) {
       shownIndexes = searchFn(latestKeyword, widget.items);
