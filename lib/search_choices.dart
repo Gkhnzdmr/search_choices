@@ -144,6 +144,7 @@ class SearchChoices<T> extends StatefulWidget {
   final bool autofocus;
   final Function selectedAggregateWidgetFn;
   final String searchKeyword;
+  final Function searchKeywordFunction;
 
   /// Search choices Widget with a single choice that opens a dialog or a menu to let the user do the selection conveniently with a search.
   ///
@@ -216,43 +217,46 @@ class SearchChoices<T> extends StatefulWidget {
     bool autofocus = true,
     Function selectedAggregateWidgetFn,
     String searchKeyword,
+    Function searchKeywordFunction,
   }) {
     return (SearchChoices._(
-        key: key,
-        items: items,
-        onChanged: onChanged,
-        value: value,
-        style: style,
-        searchHint: searchHint,
-        hint: hint,
-        disabledHint: disabledHint,
-        icon: icon,
-        underline: underline,
-        iconEnabledColor: iconEnabledColor,
-        iconDisabledColor: iconDisabledColor,
-        iconSize: iconSize,
-        isExpanded: isExpanded,
-        isCaseSensitiveSearch: isCaseSensitiveSearch,
-        closeButton: closeButton,
-        displayClearIcon: displayClearIcon,
-        clearIcon: clearIcon,
-        onClear: onClear,
-        selectedValueWidgetFn: selectedValueWidgetFn,
-        keyboardType: keyboardType,
-        validator: validator,
-        label: label,
-        searchFn: searchFn,
-        multipleSelection: false,
-        doneButton: doneButton,
-        displayItem: displayItem,
-        dialogBox: dialogBox,
-        menuConstraints: menuConstraints,
-        readOnly: readOnly,
-        menuBackgroundColor: menuBackgroundColor,
-        rightToLeft: rightToLeft,
-        autofocus: autofocus,
-        selectedAggregateWidgetFn: selectedAggregateWidgetFn,
-        searchKeyword: searchKeyword));
+      key: key,
+      items: items,
+      onChanged: onChanged,
+      value: value,
+      style: style,
+      searchHint: searchHint,
+      hint: hint,
+      disabledHint: disabledHint,
+      icon: icon,
+      underline: underline,
+      iconEnabledColor: iconEnabledColor,
+      iconDisabledColor: iconDisabledColor,
+      iconSize: iconSize,
+      isExpanded: isExpanded,
+      isCaseSensitiveSearch: isCaseSensitiveSearch,
+      closeButton: closeButton,
+      displayClearIcon: displayClearIcon,
+      clearIcon: clearIcon,
+      onClear: onClear,
+      selectedValueWidgetFn: selectedValueWidgetFn,
+      keyboardType: keyboardType,
+      validator: validator,
+      label: label,
+      searchFn: searchFn,
+      multipleSelection: false,
+      doneButton: doneButton,
+      displayItem: displayItem,
+      dialogBox: dialogBox,
+      menuConstraints: menuConstraints,
+      readOnly: readOnly,
+      menuBackgroundColor: menuBackgroundColor,
+      rightToLeft: rightToLeft,
+      autofocus: autofocus,
+      selectedAggregateWidgetFn: selectedAggregateWidgetFn,
+      searchKeyword: searchKeyword,
+      searchKeywordFunction: searchKeywordFunction,
+    ));
   }
 
   /// Search choices Widget with a multiple choice that opens a dialog or a menu to let the user do the selection conveniently with a search.
@@ -323,6 +327,7 @@ class SearchChoices<T> extends StatefulWidget {
     bool rightToLeft = false,
     bool autofocus = true,
     Function selectedAggregateWidgetFn,
+    Function searchKeywordFunction,
   }) {
     return (SearchChoices._(
       key: key,
@@ -359,6 +364,7 @@ class SearchChoices<T> extends StatefulWidget {
       rightToLeft: rightToLeft,
       autofocus: autofocus,
       selectedAggregateWidgetFn: selectedAggregateWidgetFn,
+      searchKeywordFunction: searchKeywordFunction,
     ));
   }
 
@@ -398,7 +404,8 @@ class SearchChoices<T> extends StatefulWidget {
       this.rightToLeft,
       this.autofocus,
       this.selectedAggregateWidgetFn,
-      this.searchKeyword})
+      this.searchKeyword,
+      this.searchKeywordFunction})
       : assert(items != null),
         assert(iconSize != null),
         assert(isExpanded != null),
@@ -562,6 +569,7 @@ class _SearchChoicesState<T> extends State<SearchChoices<T>> {
         iconEnabledColor: widget.iconEnabledColor,
         iconDisabledColor: widget.iconDisabledColor,
         searchKeyword: widget.searchKeyword,
+        searchKeywordFunction: widget.searchKeywordFunction,
         callOnPop: () {
           if (!widget.dialogBox &&
               widget.onChanged != null &&
@@ -810,33 +818,35 @@ class DropdownDialog<T> extends StatefulWidget {
   final bool rightToLeft;
   final bool autofocus;
   final String searchKeyword;
+  final Function searchKeywordFunction;
 
-  DropdownDialog({
-    Key key,
-    this.items,
-    this.hint,
-    this.isCaseSensitiveSearch = false,
-    this.closeButton,
-    this.keyboardType,
-    this.searchFn,
-    this.multipleSelection,
-    this.selectedItems,
-    this.displayItem,
-    this.doneButton,
-    this.validator,
-    this.dialogBox,
-    this.displayMenu,
-    this.menuConstraints,
-    this.callOnPop,
-    this.menuBackgroundColor,
-    this.updateParent,
-    this.style,
-    this.iconEnabledColor,
-    this.iconDisabledColor,
-    this.rightToLeft,
-    this.autofocus,
-    this.searchKeyword,
-  })  : assert(items != null),
+  DropdownDialog(
+      {Key key,
+      this.items,
+      this.hint,
+      this.isCaseSensitiveSearch = false,
+      this.closeButton,
+      this.keyboardType,
+      this.searchFn,
+      this.multipleSelection,
+      this.selectedItems,
+      this.displayItem,
+      this.doneButton,
+      this.validator,
+      this.dialogBox,
+      this.displayMenu,
+      this.menuConstraints,
+      this.callOnPop,
+      this.menuBackgroundColor,
+      this.updateParent,
+      this.style,
+      this.iconEnabledColor,
+      this.iconDisabledColor,
+      this.rightToLeft,
+      this.autofocus,
+      this.searchKeyword,
+      this.searchKeywordFunction})
+      : assert(items != null),
         super(key: key);
 
   _DropdownDialogState<T> createState() => _DropdownDialogState<T>();
@@ -865,6 +875,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
   void _updateShownIndexes(String keyword) {
     if (keyword != null) {
       latestKeyword = keyword;
+      widget.searchKeywordFunction(keyword);
     }
     if (latestKeyword != null) {
       shownIndexes = searchFn(latestKeyword, widget.items);
@@ -873,7 +884,6 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
 
   @override
   void initState() {
-    txtSearch.text = widget.searchKeyword;
     if (widget.searchFn != null) {
       searchFn = widget.searchFn;
     } else {
@@ -903,7 +913,13 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
       };
     }
     assert(searchFn != null);
-    _updateShownIndexes(widget.searchKeyword);
+    txtSearch.text = widget.searchKeyword;
+    if (txtSearch.text != '') {
+      _updateShownIndexes(txtSearch.text);
+    } else {
+      _updateShownIndexes('');
+    }
+
     super.initState();
   }
 

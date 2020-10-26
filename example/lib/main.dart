@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
   final _formKey = GlobalKey<FormState>();
   String inputString = "";
   TextFormField input;
-  String search="";
+  String search = "";
   List<DropdownMenuItem<ExampleNumber>> numberItems =
       ExampleNumber.list.map((exNum) {
     return (DropdownMenuItem(child: Text(exNum.numberString), value: exNum));
@@ -183,10 +183,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-  
     Map<String, Widget> widgets;
     widgets = {
       "Single dialog": SearchChoices.single(
+        searchKeywordFunction: (val) {
+          search = val;
+        },
         searchKeyword: search,
         items: items,
         value: selectedValueSingleDialog,
@@ -195,7 +197,6 @@ class _MyAppState extends State<MyApp> {
         onChanged: (value) {
           setState(() {
             selectedValueSingleDialog = value;
-            search = value;
           });
         },
         isExpanded: true,
