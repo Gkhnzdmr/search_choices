@@ -1027,6 +1027,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
       child: Stack(
         children: <Widget>[
           TextField(
+            textCapitalization: TextCapitalization.characters,
             textDirection:
                 widget.rightToLeft ? TextDirection.rtl : TextDirection.ltr,
             controller: txtSearch,
